@@ -157,6 +157,25 @@ bool ExtWrenchesAndJointTorquesEstimator::loadModelAndSensorsFromFileWithSpecifi
         }
     }
 
+    // If the fixed feet FT sensor joints are not added to the consideredDOFs list, add them anyways
+    // First, check if the joint exsists in the full model
+    if(_modelFull.getJointIndex("l_foot_ft_sensor") > 0)
+    {
+        if (std::find(consideredJoints.begin(), consideredJoints.end(), "l_foot_ft_sensor") == consideredJoints.end())
+        {
+            consideredJoints.push_back("l_foot_ft_sensor");
+        }
+    }
+
+    // Similarly perform the check to the right foot FT joint
+    if(_modelFull.getJointIndex("r_foot_ft_sensor") > 0)
+    {
+        if (std::find(consideredJoints.begin(), consideredJoints.end(), "r_foot_ft_sensor") == consideredJoints.end())
+        {
+            consideredJoints.push_back("r_foot_ft_sensor");
+        }
+    }
+
 
     Model _modelReduced;
     SensorsList _sensorsReduced;
